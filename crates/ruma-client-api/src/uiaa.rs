@@ -339,6 +339,13 @@ pub struct EmailIdentity {
     pub session: Option<String>,
 }
 
+impl EmailIdentity {
+    /// Creates a new `EmailIdentity` with the given credentials.
+    pub fn new(thirdparty_id_creds: ThirdpartyIdCredentials) -> Self {
+        Self { thirdparty_id_creds, session: None }
+    }
+}
+
 /// Data for phone number-based UIAA flow.
 ///
 /// See [the spec] for how to use this.
