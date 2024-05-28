@@ -1,5 +1,7 @@
 # [unreleased]
 
+# 0.9.5
+
 Bug fixes:
 
 - Allow underscores (`_`) when validating MXC URIs.
@@ -10,7 +12,11 @@ Bug fixes:
 
 Improvements:
 
-- Point links to the Matrix 1.9 specification
+- Point links to the Matrix 1.10 specification
+
+# 0.9.4
+
+Yanked because it was created from the wrong branch
 
 # 0.9.3
 

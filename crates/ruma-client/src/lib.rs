@@ -1,5 +1,5 @@
-#![doc(html_favicon_url = "https://ruma.io/favicon.ico")]
-#![doc(html_logo_url = "https://ruma.io/images/logo.png")]
+#![doc(html_favicon_url = "https://ruma.dev/favicon.ico")]
+#![doc(html_logo_url = "https://ruma.dev/images/logo.png")]
 //! A minimal [Matrix](https://matrix.org/) client library.
 //!
 //! # Usage
@@ -84,7 +84,6 @@
 //! * `hyper`
 //! * `hyper-native-tls`
 //! * `hyper-rustls`
-//! * `isahc`
 //! * `reqwest` – if you use the `reqwest` library already, activate this feature and configure the
 //!   TLS backend on `reqwest` directly. If you want to use `reqwest` but don't depend on it
 //!   already, use one of the sub-features instead. For details on the meaning of these, see

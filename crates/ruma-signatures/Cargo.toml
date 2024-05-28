@@ -1,13 +1,13 @@
 [package]
 categories = ["api-bindings", "cryptography"]
 description = "Digital signatures according to the Matrix specification."
-homepage = "https://ruma.io/"
+homepage = "https://ruma.dev/"
 keywords = ["matrix", "chat", "messaging", "ruma", "cryptography"]
 license = "MIT"
 name = "ruma-signatures"
 readme = "README.md"
 repository = "https://github.com/ruma/ruma"
-version = "0.14.0"
+version = "0.15.0"
 edition = "2021"
 
 [package.metadata.docs.rs]

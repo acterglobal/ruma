@@ -8,7 +8,6 @@ use std::{
 };
 
 use html5gum::{Token, Tokenizer};
-use isahc::ReadResponseExt;
 
 use crate::Result;
 
@@ -18,7 +17,7 @@ const OLD_URL_WHITELIST: &[&str] =
 
 /// Authorized versions in URLs pointing to the new specs.
 const NEW_VERSION_WHITELIST: &[&str] = &[
-    "v1.1", "v1.2", "v1.3", "v1.4", "v1.5", "v1.6", "v1.7", "v1.8", "v1.9",
+    "v1.1", "v1.2", "v1.3", "v1.4", "v1.5", "v1.6", "v1.7", "v1.8", "v1.9", "v1.10",
     "latest",
     // This should only be enabled if a legitimate use case is found.
     // "unstable",
@@ -211,7 +210,7 @@ fn check_targets(links: &[SpecLink]) -> Result<()> {
 ///
 /// Returns an error if the URL points to an invalid HTML page.
 fn get_page_ids(url: &str) -> Result<HashMap<String, HasDuplicates>> {
-    let mut page = isahc::get(url)?;
+    let page = reqwest::blocking::get(url)?;
 
     let html = page.text()?;
     let mut ids = HashMap::new();

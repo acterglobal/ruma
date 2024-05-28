@@ -12,9 +12,14 @@ pub mod negotiate;
 #[cfg(feature = "unstable-msc4075")]
 pub mod notify;
 pub mod reject;
+#[cfg(feature = "unstable-msc3291")]
+pub mod sdp_stream_metadata_changed;
 pub mod select_answer;
 
+use ruma_macros::StringEnum;
 use serde::{Deserialize, Serialize};
+
+use crate::PrivOwnedStr;
 
 /// A VoIP session description.
 ///
@@ -42,6 +47,61 @@ impl SessionDescription {
     pub fn new(session_type: String, sdp: String) -> Self {
         Self { session_type, sdp }
     }
+}
+
+/// Metadata about a VoIP stream.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[cfg_attr(not(feature = "unstable-exhaustive-types"), non_exhaustive)]
+pub struct StreamMetadata {
+    /// The purpose of the stream.
+    pub purpose: StreamPurpose,
+
+    /// Whether the audio track of the stream is muted.
+    ///
+    /// Defaults to `false`.
+    #[cfg(feature = "unstable-msc3291")]
+    #[serde(default, skip_serializing_if = "ruma_common::serde::is_default")]
+    pub audio_muted: bool,
+
+    /// Whether the video track of the stream is muted.
+    ///
+    /// Defaults to `false`.
+    #[cfg(feature = "unstable-msc3291")]
+    #[serde(default, skip_serializing_if = "ruma_common::serde::is_default")]
+    pub video_muted: bool,
+}
+
+impl StreamMetadata {
+    /// Creates a new `StreamMetadata` with the given purpose.
+    pub fn new(purpose: StreamPurpose) -> Self {
+        Self {
+            purpose,
+            #[cfg(feature = "unstable-msc3291")]
+            audio_muted: false,
+            #[cfg(feature = "unstable-msc3291")]
+            video_muted: false,
+        }
+    }
+}
+
+/// The purpose of a VoIP stream.
+#[doc = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/doc/string_enum.md"))]
+#[derive(Clone, PartialEq, Eq, StringEnum)]
+#[ruma_enum(rename_all = "m.lowercase")]
+#[non_exhaustive]
+pub enum StreamPurpose {
+    /// `m.usermedia`.
+    ///
+    /// A stream that contains the webcam and/or microphone tracks.
+    UserMedia,
+
+    /// `m.screenshare`.
+    ///
+    /// A stream with the screen-sharing tracks.
+    ScreenShare,
+
+    #[doc(hidden)]
+    _Custom(PrivOwnedStr),
 }
 
 /// The capabilities of a client in a VoIP call.

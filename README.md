@@ -7,10 +7,10 @@ network.
 
 [Rust]: https://rust-lang.org/
 [Matrix]: https://matrix.org/
-[website]: https://ruma.io/
+[website]: https://ruma.dev/
 [chat]: https://matrix.to/#/#ruma:matrix.org
 [docs]: https://docs.rs/ruma/
-[unstable-docs]: https://docs.ruma.io/ruma/
+[unstable-docs]: https://docs.ruma.dev/ruma/
 
 ## Getting started
 
@@ -24,21 +24,21 @@ dependencies:
 
 ```toml
 # crates.io release
-ruma = { version = "0.9.0", features = ["..."] }
+ruma = { version = "0.10.0", features = ["..."] }
 # git dependency
 ruma = { git = "https://github.com/ruma/ruma", branch = "main", features = ["..."] }
 ```
 
 `ruma` re-exports all of the other crates, so you don't have to worry about
 them as a user. Check out the documentation [on docs.rs][docs] (or on
-[docs.ruma.io][unstable-docs] if you use use the git dependency).
+[docs.ruma.dev][unstable-docs] if you use use the git dependency).
 
 [matrix-rust-sdk]: https://github.com/matrix-org/matrix-rust-sdk#readme
 [feat]: https://github.com/ruma/ruma/blob/1166af5a354210dcbced1eaf4a11f795c381d2ec/ruma/Cargo.toml#L35
 
 ## Status
 
-Ruma 0.9.0 supports all events and REST endpoints of Matrix 1.8.
+Ruma 0.10.0 supports all events and REST endpoints of Matrix 1.10.
 
 Various changes from in-progress or finished MSCs are also implemented, gated
 behind the `unstable-mscXXXX` (where `XXXX` is the MSC number) Cargo features.
