@@ -82,29 +82,11 @@ fn replacement_serialize() {
         }
     );
 
-    #[cfg(not(feature = "unstable-msc4095"))]
     assert_eq!(
         to_json_value(content).unwrap(),
         json!({
             "msgtype": "m.text",
             "body": "<text msg>",
-            "m.new_content": {
-                "body": "This is the new content.",
-                "msgtype": "m.text",
-            },
-            "m.relates_to": {
-                "rel_type": "m.replace",
-                "event_id": "$1598361704261elfgc",
-            },
-        })
-    );
-    #[cfg(not(feature = "unstable-msc4095"))]
-    assert_eq!(
-        to_json_value(content).unwrap(),
-        json!({
-            "msgtype": "m.text",
-            "body": "<text msg>",
-            "com.beeper.linkpreviews": Null,
             "m.new_content": {
                 "body": "This is the new content.",
                 "msgtype": "m.text",
