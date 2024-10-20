@@ -38,8 +38,13 @@ mod reply;
 pub mod sanitize;
 mod server_notice;
 mod text;
+#[cfg(feature = "unstable-msc4095")]
+mod url_preview;
 mod video;
 mod without_relation;
+
+#[cfg(feature = "unstable-msc4095")]
+pub use url_preview::UrlPreview;
 
 #[cfg(feature = "unstable-msc3245-v1-compat")]
 pub use self::audio::{
