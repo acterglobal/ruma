@@ -35,6 +35,7 @@ pub struct PreviewImage {
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 #[cfg_attr(not(feature = "unstable-exhaustive-types"), non_exhaustive)]
 pub struct UrlPreview {
+    /// The url this was matching on
     #[serde(alias = "matrix:matched_url")]
     pub matched_url: String,
 
@@ -95,6 +96,57 @@ mod tests {
             "Matrix, the open protocol for secure decentralised communications"
         );
         assert_eq!(url.as_ref().unwrap(), "https://matrix.org/");
+
+        // Check the preview image parsed:
+
+        let PreviewImage { size, url, height, width, mimetype } = image.clone().unwrap();
+        assert_eq!(u64::from(size.unwrap()), 16588);
+        assert_eq!(
+            url.clone().unwrap().to_string(),
+            "mxc://maunium.net/zeHhTqqUtUSUTUDxQisPdwZO".to_owned()
+        );
+        assert_eq!(u64::from(height.unwrap()), 400);
+        assert_eq!(u64::from(width.unwrap()), 800);
+        assert_eq!(mimetype, Some("image/jpeg".to_owned()));
+    }
+
+    #[test]
+    #[cfg(feature = "unstable-msc1767")]
+    fn parsing_extensible_example() {
+        use crate::message::MessageEventContent;
+        let normal_preview = json!({
+              "m.text": [
+                {"body": "matrix.org/support"}
+              ],
+              "m.url_previews": [
+                {
+                  "matrix:matched_url": "matrix.org/support",
+                  "matrix:image:size": 16588,
+                  "og:description": "Matrix, the open protocol for secure decentralised communications",
+                  "og:image": "mxc://maunium.net/zeHhTqqUtUSUTUDxQisPdwZO",
+                  "og:image:height": 400,
+                  "og:image:type": "image/jpeg",
+                  "og:image:width": 800,
+                  "og:title": "Support Matrix",
+                  "og:url": "https://matrix.org/support/"
+                }
+              ],
+              "m.mentions": {}
+            }
+        );
+
+        let message_with_preview: MessageEventContent = from_value(normal_preview).unwrap();
+        let MessageEventContent { url_previews, .. } = message_with_preview;
+        let previews = url_previews.expect("No url previews found");
+        assert_eq!(previews.len(), 1);
+        let UrlPreview { image, matched_url, title, url, description } = previews.first().unwrap();
+        assert_eq!(matched_url, "matrix.org/support");
+        assert_eq!(title.as_ref().unwrap(), "Support Matrix");
+        assert_eq!(
+            description.as_ref().unwrap(),
+            "Matrix, the open protocol for secure decentralised communications"
+        );
+        assert_eq!(url.as_ref().unwrap(), "https://matrix.org/support/");
 
         // Check the preview image parsed:
 
