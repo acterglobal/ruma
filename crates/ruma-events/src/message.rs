@@ -86,7 +86,7 @@ use serde::{Deserialize, Serialize};
 
 use super::room::message::Relation;
 #[cfg(feature = "unstable-msc4095")]
-pub use super::room::message::UrlPreview;
+use super::room::message::UrlPreview;
 
 pub(super) mod historical_serde;
 

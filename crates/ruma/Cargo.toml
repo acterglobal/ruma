@@ -277,6 +277,7 @@ __unstable-mscs = [
     "unstable-msc3956",
     "unstable-msc3983",
     "unstable-msc4075",
+    "unstable-msc4095",
     "unstable-msc4108",
     "unstable-msc4121",
     "unstable-msc4125",

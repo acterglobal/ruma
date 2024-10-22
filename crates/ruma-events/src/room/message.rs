@@ -43,13 +43,12 @@ mod url_preview;
 mod video;
 mod without_relation;
 
-#[cfg(feature = "unstable-msc4095")]
-pub use url_preview::UrlPreview;
-
 #[cfg(feature = "unstable-msc3245-v1-compat")]
 pub use self::audio::{
     UnstableAmplitude, UnstableAudioDetailsContentBlock, UnstableVoiceContentBlock,
 };
+#[cfg(feature = "unstable-msc4095")]
+pub use self::url_preview::UrlPreview;
 pub use self::{
     audio::{AudioInfo, AudioMessageEventContent},
     emote::EmoteMessageEventContent,
